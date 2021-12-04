@@ -14,7 +14,7 @@
           - "{{ playbook_dir }}:/src"
 
       target_image:
-        name: toolbox-aairey
+        name: toolbox
         labels:
           com.trimbletl.image.source: "https://github.com/aairey/toolbox-aairey"
           com.trimbletl.image.vendor: "aairey"
@@ -25,3 +25,7 @@
   roles:
     - name: aairey.os_base
     #- name: aairey.dotfiles # dotfiles to be stored in homedir, not in container image
+  tasks:
+    - name: Clean up dnf caches
+      command: dnf clean all
+      become: yes
