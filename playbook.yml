@@ -1,0 +1,27 @@
+---
+- hosts: all
+  vars:
+    ansible_bender:
+      base_image: "registry.fedoraproject.org/fedora-toolbox:35"
+      buildah_from_extra_args: "--dns 8.8.8.8"
+      ansible_extra_args: "-vvv"
+      cache_tasks: true
+      layering: false
+      squash: true
+
+      working_container:
+        volumes:
+          - "{{ playbook_dir }}:/src"
+
+      target_image:
+        name: toolbox-aairey
+        labels:
+          com.trimbletl.image.source: "https://github.com/aairey/toolbox-aairey"
+          com.trimbletl.image.vendor: "aairey"
+          com.trimbletl.image.created: "20211202"
+          com.trimbletl.image.version: "0.1"
+          com.trimbletl.image.revision: "main"
+    fedora_edition: 'server'
+  roles:
+    - name: aairey.os_base
+    #- name: aairey.dotfiles # dotfiles to be stored in homedir, not in container image
