@@ -4,7 +4,7 @@
     ansible_bender:
       base_image: "registry.fedoraproject.org/fedora-toolbox:36"
       buildah_from_extra_args: "--dns 8.8.8.8"
-      ansible_extra_args: "--user aairey -vvv"
+      ansible_extra_args: "-vvv"
       cache_tasks: true
       layering: false
       squash: true

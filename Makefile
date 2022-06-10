@@ -18,7 +18,7 @@ deps: requirements.txt requirements.yml
 
 build: deps
 	echo "build the container image"
-	ansible-bender build playbook.yml
+	ansible-bender build --build-user aairey playbook.yml
 
 test: build
 	echo "test the built image"
