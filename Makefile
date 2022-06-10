@@ -8,7 +8,7 @@ help:
 	@echo "       test the built container image"
 	@echo "make publish"
 	@echo "       publish the built image to a registry"
-	@echo "make publish"
+	@echo "make deploy"
 	@echo "       same as make publish in this case"
 
 deps: requirements.txt requirements.yml
@@ -22,10 +22,10 @@ build: deps
 
 test: build
 	echo "test the built image"
-
+    #TODO
 
 publish: build
 	echo "Publish the built image to a registry"
-
+    #TODO
 
 deploy: publish

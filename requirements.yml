@@ -1,6 +1,6 @@
 ---
 #- src: aairey.os_base
-- name: aairey.os_base
+- name: aairey.os_base #FIXME pin version
   src: https://github.com/aairey/ansible-role-os_base
   version: feature/check_mode_fixes
-- src: aairey.dotfiles
+#- src: aairey.dotfiles
