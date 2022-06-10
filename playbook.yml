@@ -1,7 +1,6 @@
 ---
 - hosts: all
   vars:
-    linuxbrew_user: aairey
     ansible_bender:
       base_image: "registry.fedoraproject.org/fedora-toolbox:36"
       buildah_from_extra_args: "--dns 8.8.8.8"
