@@ -15,6 +15,7 @@
 
       target_image:
         name: toolbox
+        user: "1000"
         labels:
           com.trimbletl.image.source: "https://github.com/aairey/toolbox-aairey"
           com.trimbletl.image.vendor: "aairey"
@@ -22,6 +23,10 @@
           com.trimbletl.image.version: "0.2"
           com.trimbletl.image.revision: "main"
     fedora_edition: 'toolbox'
+  pre_tasks:
+    - name: Install linuxbrew
+      shell: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+      become: true
   roles:
     - name: aairey.os_base
     #- name: aairey.dotfiles # dotfiles to be stored in homedir, not in container image
