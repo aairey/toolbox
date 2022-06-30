@@ -53,6 +53,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.IMAGE_NAME }}
+        if: github.event_name != 'pull_request'
 
       - name: Log in to ghcr.io
         uses: redhat-actions/podman-login@v1
@@ -60,6 +61,7 @@ jobs:
           username: ${{ env.REGISTRY_USER }}
           password: ${{ env.REGISTRY_PASSWORD }}
           registry: ${{ env.IMAGE_REGISTRY }}
+        if: github.event_name != 'pull_request'
 
       - name: Push to ghcr.io
         id: push-to-ghcr
@@ -68,6 +70,8 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           tags:  ${{ steps.meta.outputs.tags }}
           registry: ${{ env.IMAGE_REGISTRY }}
+        if: github.event_name != 'pull_request'
           
       - name: Print image url
         run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
+        if: github.event_name != 'pull_request'
