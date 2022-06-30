@@ -68,7 +68,7 @@ jobs:
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags:  ${{ steps.meta.outputs.tags }}
+          #tags:  ${{ steps.meta.outputs.tags }}
           registry: ${{ env.IMAGE_REGISTRY }}
         if: github.event_name != 'pull_request'
           
