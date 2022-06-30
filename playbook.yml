@@ -24,9 +24,10 @@
           com.trimbletl.image.revision: "main"
     fedora_edition: 'toolbox'
   pre_tasks:
-    - name: Install linuxbrew
-      shell: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-      become: true
+    - name: Display all variables/facts known for a host
+      debug:
+        var: hostvars[inventory_hostname]
+      tags: debug_info
   roles:
     - name: aairey.os_base
     #- name: aairey.dotfiles # dotfiles to be stored in homedir, not in container image
