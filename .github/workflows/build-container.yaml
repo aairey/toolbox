@@ -8,8 +8,6 @@ on:
     branches: [ main ]
 
 env:
-  REGISTRY_USER: ${{ github.actor }}
-  REGISTRY_PASSWORD: ${{ github.token }}
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
   IMAGE_NAME: toolbox
 
@@ -52,26 +50,21 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.IMAGE_NAME }}
-        if: github.event_name != 'pull_request'
+          images: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Log in to ghcr.io
         uses: redhat-actions/podman-login@v1
         with:
-          username: ${{ env.REGISTRY_USER }}
-          password: ${{ env.REGISTRY_PASSWORD }}
-          registry: ${{ env.IMAGE_REGISTRY }}
-        if: github.event_name != 'pull_request'
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      
+      - name: List images
+        run: |
+          podman images -a
+          docker images -a
 
       - name: Push to ghcr.io
-        id: push-to-ghcr
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ env.IMAGE_NAME }}
-          #tags:  ${{ steps.meta.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY }}
-        if: github.event_name != 'pull_request'
-          
-      - name: Print image url
-        run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
-        if: github.event_name != 'pull_request'
+        run: |
+          podman tag ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} ${{ steps.meta.outputs.tags }}
+          podman push ${{ steps.meta.outputs.tags }}
