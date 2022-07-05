@@ -66,8 +66,12 @@ jobs:
 
       - name: Push to ghcr.io
         run: |
-          read -ar tags -d '' <<< "${{ steps.meta.outputs.tags }}"
+          echo "Create array out of tags."
+          mapfile -t tags <<< "${{ steps.meta.outputs.tags }}"
+          echo "Array created."          
+
           for tag in ${tags[@]}; do
-            podman image tag ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} ${tag}
-            podman push ${tag}
+            echo "Pushing ${tag}"
+            podman image tag ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} $tag
+            podman push $tag
           done
