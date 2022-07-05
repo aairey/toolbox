@@ -66,5 +66,7 @@ jobs:
 
       - name: Push to ghcr.io
         run: |
-          podman tag ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} ${{ steps.meta.outputs.tags }}
-          podman push ${{ steps.meta.outputs.tags }}
+          for tag in ${{ steps.meta.outputs.tags }}; do
+            podman image tag ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} ${tag}
+            podman push $tag
+          done
